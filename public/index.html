@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>k6 Report Hub — 부하 테스트 리포트</title>
+
+  <!--
+    index.html — k6 결과(summary.json) 시각화 정적 대시보드 (구조 담당)
+
+    파일 분리:
+      - 구조  : index.html (이 파일)
+      - 디자인: styles.css
+      - 동작  : app.js
+      - 차트  : Chart.js (CDN, 유일하게 허용된 외부 의존)
+
+    이 페이지는 결과 뷰어일 뿐, 어떤 서버에도 요청을 보내지 않는다.
+    부하 테스트 대상은 localhost 또는 명시적으로 허가된 서버만 허용된다.
+  -->
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ── 상단바 ─────────────────────────────────────── -->
+  <header class="topbar">
+    <!-- 브랜드 심볼: 클릭하면 홈(개요)으로 이동 -->
+    <button class="brand" id="homeBtn" title="홈으로 이동" aria-label="홈으로 이동">
+      <span class="logo">k6</span>
+      <span class="name">Report Hub<small>부하 테스트 리포트</small></span>
+    </button>
+
+    <!-- 네비게이션: 클릭하면 색이 바뀌고 해당 뷰로 전환 -->
+    <nav class="nav" aria-label="섹션 네비게이션">
+      <button class="nav-btn active" data-view="overview">개요</button>
+      <button class="nav-btn" data-view="latency">응답시간</button>
+      <button class="nav-btn" data-view="thresholds">임계값</button>
+      <button class="nav-btn" data-view="checks">Checks</button>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <!-- 다크/라이트 모드 토글 -->
+    <button class="theme-toggle" id="themeBtn" title="테마 전환" aria-label="다크/라이트 모드 전환">🌙</button>
+  </header>
+
+  <!-- ── 데이터 입력 툴바 ───────────────────────────── -->
+  <div class="toolbar">
+    <label class="btn" tabindex="0" id="uploadLabel">
+      📁 summary.json 업로드
+      <input type="file" id="fileInput" accept=".json,application/json" style="display:none" />
+    </label>
+    <button class="btn" id="loadSampleBtn" type="button">🔄 샘플 데이터</button>
+    <button class="btn primary" id="exportCsvBtn" type="button">⬇️ CSV 내보내기</button>
+  </div>
+
+  <div class="paste-wrap">
+    <details>
+      <summary>✍️ JSON 직접 붙여넣기 (모바일용)</summary>
+      <textarea id="pasteArea" placeholder='여기에 summary.json 내용을 붙여넣으세요'></textarea>
+      <button class="btn" id="renderPasteBtn" type="button">붙여넣은 JSON 렌더</button>
+    </details>
+  </div>
+
+  <div class="error" id="errorBox" role="alert"></div>
+
+  <!-- ── 메인 (뷰 전환) ─────────────────────────────── -->
+  <main aria-live="polite">
+    <!-- 개요 -->
+    <section class="view active" id="view-overview">
+      <h2 class="view-title"><span class="dot"></span>개요</h2>
+      <div class="verdict" id="verdictBanner">
+        <span class="big" id="verdictText">—</span>
+        <span class="meta" id="verdictMeta"></span>
+      </div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <!-- 응답시간 차트 -->
+    <section class="view" id="view-latency">
+      <h2 class="view-title"><span class="dot"></span>응답시간 백분위 (ms)</h2>
+      <div class="panel">
+        <canvas id="latencyChart" height="240"></canvas>
+      </div>
+    </section>
+
+    <!-- 임계값 -->
+    <section class="view" id="view-thresholds">
+      <h2 class="view-title"><span class="dot"></span>임계값 (Thresholds)</h2>
+      <div class="panel">
+        <table>
+          <thead><tr><th>이름</th><th style="text-align:right">통과 여부</th></tr></thead>
+          <tbody id="thresholdsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Checks -->
+    <section class="view" id="view-checks">
+      <h2 class="view-title"><span class="dot"></span>Checks</h2>
+      <div class="panel">
+        <table>
+          <thead><tr><th>이름</th><th>통과</th><th>실패</th><th style="text-align:right">결과</th></tr></thead>
+          <tbody id="checksBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    ⚠️ 안전 규칙: 부하 테스트 대상은 <strong>localhost 또는 명시적으로 허가된 서버</strong>만 허용됩니다.
+    이 대시보드는 결과를 보여줄 뿐, 어떤 서버에도 요청을 보내지 않습니다.
+  </footer>
+
+  <!-- 차트 라이브러리 (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- 대시보드 동작 -->
+  <script src="app.js"></script>
+</body>
+</html>

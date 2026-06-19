@@ -1,0 +1,291 @@
+/* styles.css — k6 Report Hub 대시보드 스타일
+ *
+ * 구조(HTML)·디자인(CSS)·동작(JS) 분리 원칙에 따라
+ * 모든 디자인은 이 파일에서 관리한다.
+ * 테마는 CSS 변수(:root / [data-theme])로 다크·라이트를 전환한다.
+ */
+
+/* ── 테마 토큰 (다크가 기본) ───────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg: #0e1016;
+  --bg-soft: #151823;
+  --surface: #1a1e2b;
+  --surface-2: #212636;
+  --border: #2a3042;
+  --text: #eef0f6;
+  --muted: #9aa2b4;
+  --primary: #6366f1;        /* 신뢰감 있는 인디고 */
+  --primary-soft: #2a2d52;
+  --primary-text: #c7caff;
+  --green: #22c55e;
+  --green-soft: #10331f;
+  --red: #ef4444;
+  --red-soft: #3a1618;
+  --amber: #f59e0b;
+  --shadow: 0 8px 24px rgba(0,0,0,.35);
+  --ring: rgba(99,102,241,.55);
+}
+
+/* ── 라이트 모드 ───────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f5f6fa;
+  --bg-soft: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f1f3f8;
+  --border: #e3e6ee;
+  --text: #1b1f2a;
+  --muted: #5b6373;
+  --primary: #5457e6;
+  --primary-soft: #e7e8ff;
+  --primary-text: #3d40c0;
+  --green: #16a34a;
+  --green-soft: #e4f7ec;
+  --red: #dc2626;
+  --red-soft: #fdeaea;
+  --amber: #d97706;
+  --shadow: 0 8px 24px rgba(31,41,80,.08);
+  --ring: rgba(84,87,230,.45);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo',
+               'Malgun Gothic', Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s ease, color .25s ease;
+}
+
+/* ── 상단바 (헤더 + 네비 + 테마) ──────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: color-mix(in srgb, var(--bg-soft) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 브랜드 심볼 (클릭하면 홈으로 이동) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+}
+.brand:hover { background: var(--surface-2); }
+.brand .logo {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  color: #fff; font-weight: 800; font-size: 15px;
+  box-shadow: var(--shadow);
+}
+.brand .name { font-weight: 700; font-size: 1.02rem; letter-spacing: -.2px; }
+.brand .name small { display: block; font-weight: 400; font-size: .68rem; color: var(--muted); }
+
+/* 네비게이션 */
+nav.nav {
+  display: flex;
+  gap: 6px;
+  margin-left: 8px;
+  overflow-x: auto;            /* 모바일에서 가로 스크롤 */
+  scrollbar-width: none;
+}
+nav.nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background .18s, color .18s, border-color .18s;
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--text); background: var(--surface-2); }
+/* 활성(클릭된) 버튼은 색이 바뀐다 */
+.nav-btn.active {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  border-color: var(--primary);
+}
+
+.spacer { margin-left: auto; }
+
+/* 테마 토글 */
+.theme-toggle {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: grid; place-items: center;
+  transition: transform .15s, background .18s;
+}
+.theme-toggle:hover { background: var(--surface); transform: translateY(-1px); }
+
+/* ── 툴바 (데이터 입력) ────────────────────────────── */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  max-width: 980px;
+  margin: 18px auto 0;
+  padding: 0 20px;
+}
+.btn {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .1s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn:hover { border-color: var(--primary); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn.primary:hover { filter: brightness(1.08); }
+
+/* 키보드 포커스 가시성 */
+.brand:focus-visible, .nav-btn:focus-visible, .btn:focus-visible,
+.theme-toggle:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 96px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px;
+  font-family: ui-monospace, monospace;
+  font-size: .8rem;
+  resize: vertical;
+  margin: 8px 0;
+}
+
+.paste-wrap { max-width: 980px; margin: 8px auto 0; padding: 0 20px; }
+.paste-wrap summary { cursor: pointer; color: var(--muted); font-size: .85rem; padding: 4px; border-radius: 8px; }
+
+.error {
+  max-width: 980px;
+  margin: 12px auto 0;
+  padding: 10px 14px;
+  color: var(--red);
+  background: var(--red-soft);
+  border: 1px solid var(--red);
+  border-radius: 10px;
+  font-size: .88rem;
+  display: none;
+}
+
+/* ── 메인/뷰 ───────────────────────────────────────── */
+main { max-width: 980px; margin: 0 auto; padding: 20px; }
+.view { display: none; animation: fade .25s ease; }
+.view.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.view-title { font-size: 1.15rem; margin: 4px 0 16px; display: flex; align-items: center; gap: 8px; }
+.view-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+
+/* 판정 배너 */
+.verdict {
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  box-shadow: var(--shadow);
+}
+.verdict.pass { background: var(--green-soft); border: 1px solid var(--green); }
+.verdict.fail { background: var(--red-soft); border: 1px solid var(--red); }
+.verdict .big { font-size: 1.9rem; font-weight: 800; letter-spacing: -.5px; }
+.verdict.pass .big { color: var(--green); }
+.verdict.fail .big { color: var(--red); }
+.verdict .meta { color: var(--muted); font-size: .9rem; margin-left: auto; text-align: right; }
+
+/* 요약 카드 */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.card .k { color: var(--muted); font-size: .8rem; margin-bottom: 6px; }
+.card .v { font-size: 1.7rem; font-weight: 800; letter-spacing: -.5px; }
+.card .v.warn { color: var(--red); }
+.card .v.good { color: var(--green); }
+.card .sub { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+/* 표 */
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { text-align: left; padding: 12px 12px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: 0; }
+th { color: var(--muted); font-weight: 600; font-size: .82rem; }
+.badge { display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: .78rem; font-weight: 700; }
+.badge.ok { background: var(--green-soft); color: var(--green); }
+.badge.no { background: var(--red-soft); color: var(--red); }
+
+footer {
+  max-width: 980px; margin: 10px auto 40px; padding: 16px 20px;
+  color: var(--muted); font-size: .8rem;
+  border-top: 1px solid var(--border);
+}
+footer strong { color: var(--text); }
+
+/* ── 모바일 ────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .topbar { gap: 10px; padding: 10px 14px; }
+  .brand .name { font-size: .95rem; }
+  .brand .name small { display: none; }
+  main, .toolbar, .paste-wrap, footer, .error { padding-left: 14px; padding-right: 14px; }
+  .verdict .meta { margin-left: 0; text-align: left; width: 100%; }
+  .verdict .big { font-size: 1.6rem; }
+}

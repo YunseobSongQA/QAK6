@@ -1,0 +1,6 @@
+# 작업 지시용 메모 (개인 스크래치 파일)
+prompt*.txt
+
+# 의존성/빌드 산출물
+node_modules/
+.wrangler/

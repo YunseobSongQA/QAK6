@@ -1,0 +1,39 @@
+{
+  "verdict": "PASS",
+  "duration": 31,
+  "vus": 10,
+  "totalRequests": 300,
+  "rps": 9.72,
+  "failRate": 0,
+  "latency": {
+    "avg": 25.87,
+    "med": 26.06,
+    "p90": 45.45,
+    "p95": 48.77,
+    "p99": 50.58,
+    "max": 51.64,
+    "min": 0.57
+  },
+  "thresholds": [
+    {
+      "name": "http_req_failed: rate<0.01",
+      "ok": true
+    },
+    {
+      "name": "http_req_duration: p(95)<500",
+      "ok": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "상태 코드가 200",
+      "passes": 300,
+      "fails": 0
+    },
+    {
+      "name": "응답시간 < 200ms",
+      "passes": 300,
+      "fails": 0
+    }
+  ]
+}

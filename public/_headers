@@ -1,0 +1,7 @@
+# _headers — Cloudflare Pages 응답 헤더 설정
+# (Pages 가 이 파일을 읽어 정적 자산에 보안 헤더를 붙여준다)
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
