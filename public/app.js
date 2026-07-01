@@ -39,7 +39,7 @@ function parseP95Limit(thresholds) {
   return null;
 }
 
-function showError(msg) { const b = $('errorBox'); b.textContent = '⚠️ ' + msg; b.style.display = 'block'; }
+function showError(msg) { const b = $('errorBox'); b.textContent = msg; b.style.display = 'block'; }
 function clearError() { $('errorBox').style.display = 'none'; }
 
 // ── 뷰 전환 ────────────────────────────────────────
@@ -68,7 +68,7 @@ function render(data) {
   const isPass = String(data.verdict).toUpperCase() === 'PASS';
   const banner = $('verdictBanner');
   banner.className = 'verdict ' + (isPass ? 'pass' : 'fail');
-  $('verdictText').textContent = isPass ? '✅ PASS · 합격' : '❌ FAIL · 불합격';
+  $('verdictText').textContent = isPass ? 'PASS · 합격' : 'FAIL · 불합격';
   $('verdictMeta').textContent =
     `VUs ${data.vus ?? '-'} · ${data.duration ?? '-'}s · 총 ${fmt(data.totalRequests)} 요청`;
 
@@ -187,12 +187,16 @@ function escapeHtml(s) {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// 테마 토글 아이콘: 이모지 대신 인라인 SVG 사용
+const ICON_SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+
 // ── 테마 토글 (localStorage 미사용 — 세션 내에서만 유지) ──
 function toggleTheme() {
   const root = document.documentElement;
   const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', next);
-  $('themeBtn').textContent = next === 'dark' ? '🌙' : '☀️';
+  $('themeBtn').innerHTML = next === 'dark' ? ICON_MOON : ICON_SUN;
   // 차트가 떠 있으면 새 테마 색으로 다시 그린다
   if (currentView === 'latency' && currentData) renderChart(currentData.latency, parseP95Limit(currentData.thresholds));
 }

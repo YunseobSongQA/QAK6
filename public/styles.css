@@ -148,6 +148,7 @@ nav.nav::-webkit-scrollbar { display: none; }
   transition: transform .15s, background .18s;
 }
 .theme-toggle:hover { background: var(--surface); transform: translateY(-1px); }
+.theme-toggle svg { width: 18px; height: 18px; }
 
 /* ── 툴바 (데이터 입력) ────────────────────────────── */
 .toolbar {

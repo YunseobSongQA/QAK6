@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`✅ 테스트 서버 실행 중: http://${HOST}:${PORT}`);
+  console.log(`테스트 서버 실행 중: http://${HOST}:${PORT}`);
   console.log(`   - 랜덤 지연: 0~${MAX_DELAY_MS}ms (MAX_DELAY_MS 로 조절)`);
   console.log('   - 종료하려면 Ctrl+C');
 });

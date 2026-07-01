@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,22 +40,22 @@
     <span class="spacer"></span>
 
     <!-- 다크/라이트 모드 토글 -->
-    <button class="theme-toggle" id="themeBtn" title="테마 전환" aria-label="다크/라이트 모드 전환">🌙</button>
+    <button class="theme-toggle" id="themeBtn" title="테마 전환" aria-label="다크/라이트 모드 전환"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
   </header>
 
   <!-- ── 데이터 입력 툴바 ───────────────────────────── -->
   <div class="toolbar">
     <label class="btn" tabindex="0" id="uploadLabel">
-      📁 summary.json 업로드
+      summary.json 업로드
       <input type="file" id="fileInput" accept=".json,application/json" style="display:none" />
     </label>
-    <button class="btn" id="loadSampleBtn" type="button">🔄 샘플 데이터</button>
-    <button class="btn primary" id="exportCsvBtn" type="button">⬇️ CSV 내보내기</button>
+    <button class="btn" id="loadSampleBtn" type="button">샘플 데이터</button>
+    <button class="btn primary" id="exportCsvBtn" type="button">CSV 내보내기</button>
   </div>
 
   <div class="paste-wrap">
     <details>
-      <summary>✍️ JSON 직접 붙여넣기 (모바일용)</summary>
+      <summary>JSON 직접 붙여넣기 (모바일용)</summary>
       <textarea id="pasteArea" placeholder='여기에 summary.json 내용을 붙여넣으세요'></textarea>
       <button class="btn" id="renderPasteBtn" type="button">붙여넣은 JSON 렌더</button>
     </details>
@@ -107,7 +107,7 @@
   </main>
 
   <footer>
-    ⚠️ 안전 규칙: 부하 테스트 대상은 <strong>localhost 또는 명시적으로 허가된 서버</strong>만 허용됩니다.
+    ※ 안전 규칙: 부하 테스트 대상은 <strong>localhost 또는 명시적으로 허가된 서버</strong>만 허용됩니다.
     이 대시보드는 결과를 보여줄 뿐, 어떤 서버에도 요청을 보내지 않습니다.
   </footer>
 

@@ -5,7 +5,7 @@
 
 ---
 
-## ⚠️ 안전 규칙 (가장 중요)
+## 안전 규칙 (가장 중요)
 
 - **부하 테스트 대상은 `localhost` 또는 내가 명시적으로 소유·허가한 서버만** 허용됩니다.
 - 외부 사이트/운영 서버를 대상으로 삼는 것은 **DoS(서비스 거부 공격)** 이며 불법입니다. 절대 하지 마세요.
@@ -14,7 +14,7 @@
 
 ---
 
-## 📁 파일 구성
+## 파일 구성
 
 ```
 QAK6/
@@ -37,7 +37,7 @@ QAK6/
 
 ---
 
-## 🚀 실행 순서
+## 실행 순서
 
 ### 0) k6 설치 (최초 1회)
 
@@ -73,19 +73,19 @@ k6 run load-test.js
 `public/index.html` 을 브라우저로 엽니다. (배포본은 아래 Cloudflare Pages 주소에서 바로 볼 수 있습니다)
 
 - 페이지를 열면 **샘플 데이터**가 먼저 보입니다.
-- **📁 summary.json 업로드** 버튼으로 방금 만든 실제 결과를 불러옵니다.
-- 모바일이라 파일 선택이 불편하면 **✍️ JSON 직접 붙여넣기** 를 사용하세요.
+- **summary.json 업로드** 버튼으로 방금 만든 실제 결과를 불러옵니다.
+- 모바일이라 파일 선택이 불편하면 **JSON 직접 붙여넣기** 를 사용하세요.
 
 대시보드 표시 항목:
 - PASS/FAIL 판정 (녹색/적색)
 - 요약 카드 (총 요청 · RPS · p95 · 실패율)
 - 응답시간 백분위 막대차트 (p95가 임계값 초과 시 빨강)
 - checks 통과/실패 표
-- **⬇️ CSV 내보내기** 버튼
+- **CSV 내보내기** 버튼
 
 ---
 
-## ☁️ Cloudflare Pages 배포 (qak6.pages.dev)
+## Cloudflare Pages 배포 (qak6.pages.dev)
 
 대시보드(`public/`)는 정적 파일이라 Cloudflare Pages 로 무료 배포할 수 있습니다.
 두 가지 방법 중 하나를 쓰면 됩니다.
@@ -102,7 +102,7 @@ k6 run load-test.js
    - **Build output directory**: `public`
 4. **Save and Deploy** → 잠시 후 `https://qak6.pages.dev` 에서 확인
 
-> ⚠️ 이 단계는 본인 Cloudflare 계정 로그인이 필요해 대신 해드릴 수 없습니다.
+> ※ 이 단계는 본인 Cloudflare 계정 로그인이 필요해 대신 해드릴 수 없습니다.
 > 단, 빌드 설정(`output = public`)은 `wrangler.toml` 에 미리 맞춰 두었습니다.
 
 ### 방법 B — wrangler CLI 로 직접 배포
@@ -116,7 +116,7 @@ npx wrangler pages deploy public   # public/ 폴더를 배포
 
 ---
 
-## 🔧 실험해보기
+## 실험해보기
 
 - `server.js` 의 `MAX_DELAY_MS` 값을 키우면 서버가 느려져 p95/p99 가 올라갑니다.
   충분히 키우면 임계값을 넘겨 **FAIL** 판정이 나는 것도 확인할 수 있습니다.

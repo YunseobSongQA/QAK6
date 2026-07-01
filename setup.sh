@@ -14,11 +14,11 @@ set -e  # 명령이 하나라도 실패하면 즉시 중단
 
 K6_VERSION="v0.50.0"  # 폴백(바이너리)에서 받을 버전
 
-echo "📦 k6 설치를 시작합니다 (Ubuntu/Debian)..."
+echo "k6 설치를 시작합니다 (Ubuntu/Debian)..."
 
 # 이미 설치되어 있으면 건너뛴다
 if command -v k6 >/dev/null 2>&1; then
-  echo "ℹ️  k6 가 이미 설치되어 있습니다."
+  echo "k6 가 이미 설치되어 있습니다."
   k6 version
   exit 0
 fi
@@ -66,13 +66,13 @@ install_via_binary() {
 
 # A 실패 시 B 로 자동 폴백
 if install_via_apt; then
-  echo "✅ apt 저장소 설치 성공"
+  echo "apt 저장소 설치 성공"
 else
-  echo "⚠️  apt 설치 실패 → 바이너리 폴백으로 전환합니다."
+  echo "apt 설치 실패 → 바이너리 폴백으로 전환합니다."
   install_via_binary
 fi
 
 # ── 설치 확인 ─────────────────────────────────────────────
 echo ""
-echo "✅ 설치 완료! 버전 확인:"
+echo "설치 완료! 버전 확인:"
 k6 version

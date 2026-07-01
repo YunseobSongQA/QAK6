@@ -123,7 +123,7 @@ export function handleSummary(data) {
   };
 
   // 콘솔에도 짧게 찍어주고, 파일로 저장
-  console.log(`\n📊 판정: ${verdict} | 총요청: ${totalRequests} | p95: ${summary.latency.p95}ms`);
+  console.log(`\n판정: ${verdict} | 총요청: ${totalRequests} | p95: ${summary.latency.p95}ms`);
 
   return {
     'summary.json': JSON.stringify(summary, null, 2),
